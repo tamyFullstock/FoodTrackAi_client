@@ -1,15 +1,15 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import AnimatedSquareButton from "../components/buttons/AnimatedSquareButton";
+import { colors } from "../context/globals"; // Import colors
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const features = [
-    { title: "Ingredients", path: "/ingredients" },
-    { title: "Build Meals", path: "/meals" },
+    { title: "Products", path: "/products" },
+    { title: "Meals", path: "/meals" },
     { title: "Statistics", path: "/statistics" },
     { title: "Upload Image", path: "/upload" },
   ];
@@ -18,7 +18,7 @@ const Dashboard = () => {
     <Box
       sx={{
         height: "100vh",
-        backgroundColor: "#2196F3",
+        backgroundColor: colors.primary, // Use color from globals
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

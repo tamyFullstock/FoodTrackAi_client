@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
+import { colors } from "../context/globals"; // Import colors
 
 const Home = () => {
   const navigate = useNavigate();
@@ -9,26 +10,26 @@ const Home = () => {
     <Box
       sx={{
         height: "100vh",
-        backgroundColor: "#2196F3", // Nice blue background
+        backgroundColor: colors.primary, // Use color from globals
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Typography variant="h2" sx={{ color: "white", fontWeight: "bold" }}>
+      <Typography variant="h2" sx={{ color: colors.text, fontWeight: "bold" }}>
         FoodTrackAi
       </Typography>
       <Button
         variant="contained"
         sx={{
           mt: 4,
-          backgroundColor: "white",
-          color: "#2196F3",
+          backgroundColor: colors.text, // White button
+          color: colors.primary, // Blue text
           fontSize: "1.2rem",
           padding: "10px 40px",
           borderRadius: "20px",
-          "&:hover": { backgroundColor: "#f5f5f5" },
+          "&:hover": { backgroundColor: colors.background }, // Lighter hover effect
         }}
         onClick={() => navigate("/dashboard")}
       >

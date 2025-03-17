@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard'
-import IngredientsList from './features/ingredients/IngredientsList'
+import ProductsList from './features/ingredients/ProductsList'
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route index element = {<Home/>}/>
         <Route path="dashboard" element = {<Dashboard/>}/>
         <Route path = "features">
-          <Route path = "ingredients" element = {<IngredientsList/>}/>
+          <Route path = "products" element = {<ProductsList/>}/>
         </Route>
       </Route>
     </Routes>
