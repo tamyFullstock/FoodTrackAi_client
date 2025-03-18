@@ -8,11 +8,12 @@ import AddProductForm from "./AddProductForm"; // Import the new form component
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1); //current page
+  const [totalPages, setTotalPages] = useState(1); // max pages exist in server according to the limit
   const [openModal, setOpenModal] = useState(false); // State for modal visibility
-  const limit = 9;
+  const limit = 9; // fetch 9 products any time
 
+  // fetch all products by pagination
   const fetchProducts = useCallback(async () => {
     if (loading || page > totalPages) return;
     setLoading(true);
@@ -27,6 +28,7 @@ const Products = () => {
     setLoading(false);
   }, [loading, page, totalPages]);
 
+  //event to fetch more products from server
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -45,6 +47,7 @@ const Products = () => {
     return () => observer.disconnect();
   }, [fetchProducts]);
 
+  //remove a product
   const handleRemove = async (id) => {
     try {
       await axios.delete(`${SERVER_URL}/products/${id}`);
@@ -54,6 +57,7 @@ const Products = () => {
     }
   };
 
+  //add a product in client side 
   const handleProductAdded = (newProduct) => {
     setProducts((prev) => [newProduct, ...prev]); // Add new product to the list
   };
