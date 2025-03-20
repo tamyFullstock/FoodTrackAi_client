@@ -7,8 +7,8 @@ import SelectField from "../../components/input_fields/SelectField";
 import ImageUpload from "../../components/input_fields/ImageUpload";
 
 // Form component for adding and updating products
-// if product is null = meaning adding state. else = updating this product.
-const AddProductForm = ({ onClose, onProductAdded, product }) => {
+// if item is null = meaning adding state. else = updating this item.
+const AddUpdateProductForm = ({ onClose, onItemAdded, item }) => {
   const [productData, setProductData] = useState({
     sku: "", name: "", category: "", unit: "", dosage: "",
     weight_per_unit: "", calories_per_unit: "", serving_style: "Regular", image_url: null,
@@ -36,25 +36,25 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
     fetchData();
   }, []);
 
-  // Pre-fill form with existing product data if it's an update
+  // Pre-fill form with existing item data if it's an update
   useEffect(() => {
-    if (product) {
+    if (item) {
       setProductData({
-        sku: product.sku || "",
-        name: product.name || "",
-        category: product.category || "",
-        unit: product.unit || "",
-        dosage: product.dosage || "",
-        weight_per_unit: product.weight_per_unit || "",
-        calories_per_unit: product.calories_per_unit || "",
-        serving_style: product.serving_style || "Regular",
+        sku: item.sku || "",
+        name: item.name || "",
+        category: item.category || "",
+        unit: item.unit || "",
+        dosage: item.dosage || "",
+        weight_per_unit: item.weight_per_unit || "",
+        calories_per_unit: item.calories_per_unit || "",
+        serving_style: item.serving_style || "Regular",
         image_url: null, // Reset image for update
       });
-      setImagePreview(product.image_url ? `${SERVER_URL}/${product.image_url}` : null);
+      setImagePreview(item.image_url ? `${SERVER_URL}/${item.image_url}` : null);
     }
-  }, [product]);
+  }, [item]);
 
-  // check all fields user enter are valid, and all required fields are not empty.
+  // check all fields user enters are valid, and all required fields are not empty.
   // if not - show error message on screen
   const validateForm = () => {
     const { sku, name, category, unit, image_url } = productData;
@@ -63,7 +63,7 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
       setOpenSnackbar(true);
       return false;
     }
-    if (!image_url && !product) {
+    if (!image_url && !item) {
       setErrorMessage("Please upload an image.");
       setOpenSnackbar(true);
       return false;
@@ -82,7 +82,7 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
     }
   };
 
-  // submit the query, destinguish update and adding
+  // submit the query, distinguish update and adding
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -108,18 +108,18 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
 
     try {
       let response;
-      if (product?.id) {
-        // Update product
-        response = await axios.put(`${SERVER_URL}/products/${product.id}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+      if (item?.id) {
+        // Update item
+        response = await axios.put(`${SERVER_URL}/products/${item.id}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
       } else {
-        // Add product
+        // Add new item
         response = await axios.post(`${SERVER_URL}/products`, formData, { headers: { "Content-Type": "multipart/form-data" } });
       }
-      onProductAdded(response.data); // Update the product list
+      onItemAdded(response.data); // Update the item list
       onClose();
     } catch (error) {
-      console.error("Error submitting product:", error);
-      setErrorMessage("Failed to submit the product.");
+      console.error("Error submitting item:", error);
+      setErrorMessage("Failed to submit the item.");
       setOpenSnackbar(true);
     }
     setLoading(false);
@@ -128,7 +128,7 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Box sx={{ p: 4, maxWidth: 500, bgcolor: "white", borderRadius: 2, textAlign: "center", boxShadow: 3 }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>{product ? "Update Product" : "Add New Product"}</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>{item ? "Update Item" : "Add New Item"}</Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <InputField label="SKU" name="sku" value={productData.sku} onChange={handleChange} required />
@@ -140,15 +140,15 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
             <InputField label="Calories per Unit" name="calories_per_unit" type="number" value={productData.calories_per_unit} onChange={handleChange} />
             <SelectField label="Serving Style" name="serving_style" value={productData.serving_style} onChange={handleChange} options={["Regular", "Ground"]} required />
             <Grid item xs={12} display="flex" justifyContent="center" alignItems="center">
-              <ImageUpload imagePreview={imagePreview} handleImageChange={handleImageChange} required={!product} /> {/**image upload required only in adding state */}
+              <ImageUpload imagePreview={imagePreview} handleImageChange={handleImageChange} required={!item} /> {/* image upload required only in adding state */}
             </Grid>
             <Grid item xs={12} display="flex" justifyContent="space-between">
               <Button onClick={onClose} sx={{ color: colors.secondary }}>Cancel</Button>
-              <Button type="submit" variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>{loading ? "Uploading..." : product ? "Update Product" : "Add Product"}</Button>
+              <Button type="submit" variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>{loading ? "Uploading..." : item ? "Update Item" : "Add Item"}</Button>
             </Grid>
           </Grid>
         </form>
-        {/** show error message if error */}
+        {/* show error message if error */}
         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={() => setOpenSnackbar(false)}>
           <Alert onClose={() => setOpenSnackbar(false)} severity="error">{errorMessage}</Alert>
         </Snackbar>
@@ -157,4 +157,4 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
   );
 };
 
-export default AddProductForm;
+export default AddUpdateProductForm;
