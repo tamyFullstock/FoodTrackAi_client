@@ -53,22 +53,21 @@ const MealCard = ({ item, onRemove, onUpdate }) => {
             <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
               Final Weight: {item.weight_after}g
             </Typography>
-
+            
             {/* Display Products */}
-            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
-              Products in the Meal:
-            </Typography>
+            {item.products && item.products.length > 0 && (
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
+                Products in the Meal:
+              </Typography>
+            )}
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {item.products.map((product, index) => (
+              {item.products && item.products.map((product, index) => (
                 <Chip key={index} label={product} color="primary" variant="outlined" />
               ))}
             </Box>
 
             {/* Buttons for Update and Remove */}
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-              <IconButton onClick={handleUpdate} color="primary" sx={{ marginRight: 1 }}>
-                <EditIcon />
-              </IconButton>
               <IconButton onClick={handleRemove} color="secondary">
                 <DeleteIcon />
               </IconButton>

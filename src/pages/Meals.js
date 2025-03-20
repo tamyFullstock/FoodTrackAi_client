@@ -1,6 +1,6 @@
 import React from "react";
 import MealCard from "../components/cards/MealCard";
-import AddUpdateProductForm from "../components/forms/add_update/AddUpdateProductForm"; // Import the Add/Update form for products
+import AddMealForm from "../components/forms/add_update/AddMealForm"; // Import the Add/Update form for products
 import { SERVER_URL } from "../context/globals"; // Your server URL context
 import Items from "../components/ItemsList"
 
@@ -14,7 +14,7 @@ const MealsList = () => {
   return (
     <Items
       CardType={MealCard}
-      AddUpdateForm={AddUpdateProductForm} // Pass in the Add/Update Product Form as AddUpdateForm
+      AddUpdateForm={AddMealForm} // Pass in the Add/Update Product Form as AddUpdateForm
       object={object} // Pass the object with URL entry and type as props
     />
   );
