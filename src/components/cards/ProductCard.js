@@ -1,7 +1,9 @@
 import React from "react";
-import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { Card, CardContent, Typography, Box, IconButton } from "@mui/material";
 import { colors } from "../../context/globals";
 import { renderProductAttribute, CardMediaComponent } from "./utils";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ProductCard = ({ item, onRemove, onUpdate }) => {
   return (
@@ -23,17 +25,17 @@ const ProductCard = ({ item, onRemove, onUpdate }) => {
         )}
         {renderProductAttribute("Serving Style", item.serving_style)}
 
-        <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
-          <Button variant="contained" color="error" onClick={() => onRemove(item.id)}>
-            Remove
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: colors.secondary, "&:hover": { backgroundColor: "#e68a00" } }}
-            onClick={() => onUpdate(item)}
-          >
-            Update
-          </Button>
+        {/* Icon Buttons for Update and Remove */}
+        <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end", gap: 1 }}>
+          {/* Update Icon */}
+          <IconButton onClick={() => onUpdate(item)} color="primary">
+            <EditIcon />
+          </IconButton>
+
+          {/* Remove Icon */}
+          <IconButton onClick={() => onRemove(item.id)} color="secondary">
+            <DeleteIcon />
+          </IconButton>
         </Box>
       </CardContent>
     </Card>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Box, Button, Grid, Typography, CircularProgress, Modal } from "@mui/material";
-import { colors, SERVER_URL } from "../../context/globals";
+import { colors, SERVER_URL } from "../context/globals";
 import axios from "axios";
 
 const Items = ({ CardType, AddUpdateForm, object }) => {

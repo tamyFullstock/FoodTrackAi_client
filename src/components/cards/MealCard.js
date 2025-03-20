@@ -1,8 +1,24 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Box, Chip, Grid } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Box, Chip, Grid, IconButton } from '@mui/material';
 import { SERVER_URL } from '../../context/globals';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-const MealCard = ({ meal, onRemove, onUpdate }) => {
+const MealCard = ({ item, onRemove, onUpdate }) => {
+  // Handler for remove action
+  const handleRemove = () => {
+    if (onRemove) {
+      onRemove(item.id); // Pass the meal ID to remove it
+    }
+  };
+
+  // Handler for update action
+  const handleUpdate = () => {
+    if (onUpdate) {
+      onUpdate(item); // Pass the entire item for updating
+    }
+  };
+
   return (
     <Card sx={{ backgroundColor: 'white', boxShadow: 3, borderRadius: 2, overflow: 'hidden' }}>
       <Grid container>
@@ -11,13 +27,13 @@ const MealCard = ({ meal, onRemove, onUpdate }) => {
           <CardMedia
             component="img"
             sx={{ width: '100%', height: 200, objectFit: 'cover' }}
-            image={`${SERVER_URL}/${meal.picture_before}`}
+            image={`${SERVER_URL}/${item.picture_before}`}
             alt="Meal Before"
           />
           <CardMedia
             component="img"
             sx={{ width: '100%', height: 200, objectFit: 'cover', marginTop: '8px' }}
-            image={`${SERVER_URL}/${meal.picture_after}`}
+            image={`${SERVER_URL}/${item.picture_after}`}
             alt="Meal After"
           />
         </Grid>
@@ -26,16 +42,16 @@ const MealCard = ({ meal, onRemove, onUpdate }) => {
         <Grid item xs={12} md={6}>
           <CardContent>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              Meal ID: {meal.id}
+              Meal ID: {item.id}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {meal.description}
+              {item.description}
             </Typography>
             <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-              Initial Weight: {meal.weight_before}g
+              Initial Weight: {item.weight_before}g
             </Typography>
             <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-              Final Weight: {meal.weight_after}g
+              Final Weight: {item.weight_after}g
             </Typography>
 
             {/* Display Products */}
@@ -43,9 +59,19 @@ const MealCard = ({ meal, onRemove, onUpdate }) => {
               Products in the Meal:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {meal.products.map((product, index) => (
+              {item.products.map((product, index) => (
                 <Chip key={index} label={product} color="primary" variant="outlined" />
               ))}
+            </Box>
+
+            {/* Buttons for Update and Remove */}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+              <IconButton onClick={handleUpdate} color="primary" sx={{ marginRight: 1 }}>
+                <EditIcon />
+              </IconButton>
+              <IconButton onClick={handleRemove} color="secondary">
+                <DeleteIcon />
+              </IconButton>
             </Box>
           </CardContent>
         </Grid>
