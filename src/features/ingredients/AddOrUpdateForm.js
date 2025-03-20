@@ -58,30 +58,16 @@ const AddProductForm = ({ onClose, onProductAdded, product }) => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setProductData({ ...productData, image_url: file }); // Store the actual file
-      setImagePreview(URL.createObjectURL(file)); // Update the preview
+      setProductData({ ...productData, image_url: file });
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
-    // Prepare FormData for submission
     const formData = new FormData();
-
-    // Append product data
-    Object.entries(productData).forEach(([key, value]) => {
-      if (key !== "image_url") { // Don't append image_url here
-        formData.append(key, value);
-      }
-    });
-
-    // Append the image if it was changed
-    if (productData.image_url) {
-      formData.append("image_url", productData.image_url); // Append the new image file
-    }
-
+    Object.entries(productData).forEach(([key, value]) => formData.append(key, value));
     try {
       let response;
       if (product?.id) {
