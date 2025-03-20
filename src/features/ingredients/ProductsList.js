@@ -64,7 +64,7 @@ const Products = () => {
     setOpenModal(true); // Open the modal for update
   };
 
-  //handle adding or updating the product
+  //handle adding or updating the product in frontend
   const handleProductAdded = (product) => {
     setOpenModal(false); // Close the modal
     if (selectedProduct) {
@@ -72,7 +72,6 @@ const Products = () => {
       setProducts((prev) =>
         prev.map((p) => (parseInt(p.id) === parseInt(product.id) ? product : p))
       );
-      console.log(products, "update", product)
     } else {
       // If we are adding, add the new product to the list
       setProducts((prev) => [product, ...prev]);
@@ -85,7 +84,7 @@ const Products = () => {
       <Typography variant="h4" sx={{ mb: 3, color: colors.primary, fontWeight: "bold" }}>
         Products
       </Typography>
-
+      {/* add button */}
       <Button
         variant="contained"
         sx={{ mb: 3, backgroundColor: colors.primary, color: "white", "&:hover": { backgroundColor: colors.secondary } }}
@@ -96,7 +95,7 @@ const Products = () => {
       >
         Add Product
       </Button>
-
+      {/* list of all products */}
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid item xs={12} sm={6} md={4} key={product.id}>
@@ -104,7 +103,7 @@ const Products = () => {
           </Grid>
         ))}
       </Grid>
-
+      {/* pagination trigger observer */}
       <div id="load-more-trigger" style={{ height: "50px", width: "100%" }}></div>
 
       {loading && (
@@ -112,7 +111,7 @@ const Products = () => {
           <CircularProgress />
         </Box>
       )}
-
+      {/* form of updating/ adding item */}
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
         <AddProductForm
           product={selectedProduct} // Pass selected product for update

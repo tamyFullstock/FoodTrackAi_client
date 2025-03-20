@@ -24,6 +24,7 @@ const ProductCard = ({ product, onRemove, onUpdate }) => {
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           {product.name}
         </Typography>
+        {/*  render item fields */}
         {renderProductAttribute("SKU", product.sku)}
         {renderProductAttribute("Category", product.category)}
         {renderProductAttribute("Dosage", product.dosage && `${product.dosage} mg`)}
